@@ -40,4 +40,54 @@ public class JsonPathTest {
         
         Assert.assertEquals(o.toString(),"20");
     }
+    
+    
+    @Test
+    public void multiClassMax() {
+        JSONObject json = new JSONObject();
+        JSONArray jsonArr = new JSONArray();
+        jsonArr.add(new JSONObject().fluentPut("price", 10L));
+        jsonArr.add(new JSONObject().fluentPut("price", 10.1f));
+        jsonArr.add(new JSONObject().fluentPut("price", 10.2d));
+        jsonArr.add(new JSONObject().fluentPut("price", BigInteger.valueOf(10L)));
+        jsonArr.add(new JSONObject().fluentPut("price", BigDecimal.valueOf(10.3d)));
+        
+        json.put("arr", jsonArr);
+        Object o = JSONPath.eval(json, "$.arr[*].price.max()");
+        
+        Assert.assertEquals(o.toString(),"10.3");
+    }
+    
+    @Test
+    public void multiClassMin() {
+        JSONObject json = new JSONObject();
+        JSONArray jsonArr = new JSONArray();
+        jsonArr.add(new JSONObject().fluentPut("price", 9L));
+        jsonArr.add(new JSONObject().fluentPut("price", 10.1f));
+        jsonArr.add(new JSONObject().fluentPut("price", 10.2d));
+        jsonArr.add(new JSONObject().fluentPut("price", BigInteger.valueOf(10L)));
+        jsonArr.add(new JSONObject().fluentPut("price", BigDecimal.valueOf(10.3d)));
+        
+        json.put("arr", jsonArr);
+        Object o = JSONPath.eval(json, "$.arr[*].price.min()");
+        
+        Assert.assertEquals(o.toString(),"9");
+    }
+    
+    @Test
+    public void multiClassAvg() {
+        JSONObject json = new JSONObject();
+        JSONArray jsonArr = new JSONArray();
+        jsonArr.add(new JSONObject().fluentPut("price", 9L));
+        jsonArr.add(new JSONObject().fluentPut("price", 10.1f));
+        jsonArr.add(new JSONObject().fluentPut("price", 10.2d));
+        jsonArr.add(new JSONObject().fluentPut("price", BigInteger.valueOf(10L)));
+        jsonArr.add(new JSONObject().fluentPut("price", BigDecimal.valueOf(10.3d)));
+        
+        json.put("arr", jsonArr);
+        Object o = JSONPath.eval(json, "$.arr[*].price.avg()");
+        
+        Assert.assertEquals(o.toString(),"9");
+    }
+
 }
